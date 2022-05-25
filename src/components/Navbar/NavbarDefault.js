@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "./NavbarDefault.scss";
 
 export const NavbarDefault = () => {
   const navigate = useNavigate();
@@ -28,10 +29,10 @@ export const NavbarDefault = () => {
           className="justify-content-end align-items-center"
         >
           <Nav className="align-items-center">
-            <Nav.Link href="/our-services">Our Services</Nav.Link>
-            <Nav.Link href="/why-us">Why Us</Nav.Link>
-            <Nav.Link href="/testimonial">Testimonial</Nav.Link>
-            <Nav.Link href="/faq">FAQ</Nav.Link>
+            <Nav.Link href="#our-services">Our Services</Nav.Link>
+            <Nav.Link href="#why-us">Why Us</Nav.Link>
+            <Nav.Link href="#testimonial">Testimonial</Nav.Link>
+            <Nav.Link href="#faq">FAQ</Nav.Link>
             {loggedIn ? (
               <Fragment>
                 <Nav.Link href="/dashboard" disabled>
