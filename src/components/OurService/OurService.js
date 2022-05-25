@@ -1,11 +1,13 @@
 import React from "react";
+import "./OurService.scss";
+import ServiceImage from "../../assets/img/img_service.png";
 
 export const OurService = () => {
   return (
     <div class="our-services" id="our-services">
       <div class="container row flex-column gap-5 align-items-center m-auto flex-lg-row">
         <div class="col w-100">
-          <img class="w-100" src="./Assets/img/img_service.png" alt="service" />
+          <img class="w-100" src={ServiceImage} alt="service" />
         </div>
         <div class="col d-flex flex-column gap-2 lgw-50">
           <h2>Best Car Rental for any kind of trip in Gresik!</h2>
