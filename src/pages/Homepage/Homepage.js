@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Footer } from "../../components/Footer/Footer";
 import { HeroBanner } from "../../components/HeroBanner/HeroBanner";
 import { NavbarDefault } from "../../components/Navbar/NavbarDefault";
 import { OurService } from "../../components/OurService/OurService";
@@ -13,6 +13,7 @@ export const Homepage = () => {
         <HeroBanner />
         <OurService />
         <WhyUs />
+        <Footer />
       </div>
     </>
   );
