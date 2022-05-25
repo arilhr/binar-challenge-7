@@ -1,0 +1,43 @@
+.hero-section {
+  padding: 0 100px;
+  background: #f1f3ff;
+  height: 500px;
+  display: flex;
+  align-items: center;
+
+  .section-1 {
+    flex: 1;
+    margin-right: 100px;
+
+    h3 {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 150%;
+      margin: 0;
+      margin-bottom: 16px;
+    }
+
+    p {
+      width: 75%;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 20px;
+      margin: 0;
+    }
+  }
+
+  .section-2 {
+    flex: 1;
+    height: 100%;
+    position: relative;
+
+    img {
+      position: absolute;
+      bottom: 0;
+      right: -100px;
+    }
+  } 
+}
+
+@media (max-width: 700px) {
+}
