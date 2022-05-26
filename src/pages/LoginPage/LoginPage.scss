@@ -71,3 +71,16 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .login-page {
+    .jumbotron-section {
+      display: none;
+    }
+
+    .main-section {
+      flex: 1;
+      padding: 10px;
+    }
+  }
+}
