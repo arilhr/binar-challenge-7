@@ -5,7 +5,6 @@ import { ListCarItem } from "../../../components/ListCarItem/ListCarItem";
 import { SecondarySidebar } from "../../../components/SecondarySidebar/SecondarySidebar";
 import { SectionNavigation } from "../../../components/SectionNavigation/SectionNavigation";
 import { NotificationCard } from "../../../components/NotificationCard/NotificationCard";
-import CarImage from "../../../assets/img/car-image.png";
 import { ReactComponent as PlusIcon } from "../../../assets/img/fi_plus.svg";
 import "./CarPage.scss";
 import "./AddNewCarPage.scss";
