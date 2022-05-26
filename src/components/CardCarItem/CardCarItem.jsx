@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import "./CardCarItem.scss";
-import { ReactComponent as CalendarIcon } from "../../img/fi_calendar.svg";
-import { ReactComponent as SettingIcon } from "../../img/fi_settings.svg";
-import { ReactComponent as UsersIcon } from "../../img/fi_users.svg";
+import { ReactComponent as CalendarIcon } from "../../assets/img/fi_calendar.svg";
+import { ReactComponent as SettingIcon } from "../../assets/img/fi_settings.svg";
+import { ReactComponent as UsersIcon } from "../../assets/img/fi_users.svg";
 import { useNavigate } from "react-router-dom";
 
 export const CardCarItem = ({
