@@ -12,6 +12,7 @@ import "./AddNewCarPage.scss";
 export const CarPage = () => {
   const [pageState, setPageState] = useState("list-car");
   const [deleteItem, setDeleteItem] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
   const [notif, setNotif] = useState({ show: false, type: "", message: "" });
   const [carFilter, setCarFilter] = useState("all");
   const [carData, setCarData] = useState([]);
@@ -33,32 +34,48 @@ export const CarPage = () => {
         return carData;
       case "small":
         return carData.filter((value) => {
-          return value.category === "Small";
+          return value.category?.toLowerCase() === "small";
         });
       case "medium":
         return carData.filter((value) => {
-          return value.category === "Medium";
+          return value.category?.toLowerCase() === "medium";
         });
       case "large":
         return carData.filter((value) => {
-          return value.category === "Large";
+          return value.category?.toLowerCase() === "large";
         });
       default:
         break;
     }
   };
 
-  const handleShowDeleteAlert = () => {
+  const handleShowDeleteAlert = (id) => {
+    setDeleteItemId(id);
     setDeleteItem(true);
   };
 
   const handleUnshowDeleteAlert = () => {
+    setDeleteItemId(null);
     setDeleteItem(false);
   };
 
-  const handleDeleteItem = () => {
-    handleUnshowDeleteAlert();
-    handleShowNotification("black", "Data Berhasil Dihapus");
+  const handleDeleteItem = (id) => {
+    const axios = require("axios");
+    axios
+      .delete(process.env.REACT_APP_API + "/admin/car/" + id)
+      .then((res) => {
+        if (res.status === 200) {
+          handleUnshowDeleteAlert();
+          handleShowNotification("black", "Data Berhasil Dihapus");
+          const newCarData = carData.filter((value) => {
+            return value.id !== id;
+          });
+          setCarData(newCarData);
+        }
+      })
+      .catch((err) => {
+        handleShowNotification("black", "Data Gagal Dihapus");
+      });
   };
 
   const handleToAddnewCar = () => {
@@ -103,7 +120,7 @@ export const CarPage = () => {
           {deleteItem ? (
             <DeleteCard
               onCancel={handleUnshowDeleteAlert}
-              onAccept={handleDeleteItem}
+              onAccept={() => handleDeleteItem(deleteItemId)}
             />
           ) : null}
           <div className="list-car-section">
@@ -162,7 +179,7 @@ export const CarPage = () => {
                     start={item.start_rent_at}
                     finish={item.finish_rent_at}
                     lastUpdate={item.updatedAt}
-                    onDelete={handleShowDeleteAlert}
+                    onDelete={() => handleShowDeleteAlert(item.id)}
                     onEdit={handleToAddnewCar}
                   />
                 );
