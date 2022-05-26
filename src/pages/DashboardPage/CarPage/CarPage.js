@@ -8,6 +8,7 @@ import { NotificationCard } from "../../../components/NotificationCard/Notificat
 import { ReactComponent as PlusIcon } from "../../../assets/img/fi_plus.svg";
 import "./CarPage.scss";
 import "./AddNewCarPage.scss";
+import { AddNewCar } from "../../../components/AddNewCar/AddNewCar";
 
 export const CarPage = () => {
   const [pageState, setPageState] = useState("list-car");
@@ -75,6 +76,33 @@ export const CarPage = () => {
       })
       .catch((err) => {
         handleShowNotification("black", "Data Gagal Dihapus");
+      });
+  };
+
+  const handleAddNewCar = (name, category, price, status, image) => {
+    const axios = require("axios");
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("status", status);
+    formData.append("image", image);
+
+    var config = {
+      method: "post",
+      url: process.env.REACT_APP_API + "/admin/car",
+      data: formData,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        handleToListCar();
+        handleShowNotification("success", "Data Berhasil Ditambahkan");
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
@@ -191,78 +219,7 @@ export const CarPage = () => {
 
       {/* ADD NEW CAR */}
       {pageState === "add-new-car" ? (
-        <Fragment>
-          <div className="add-new-car-page">
-            <SectionNavigation
-              sections={[
-                { name: "Cars", link: "/dashboard/car" },
-                { name: "List Car", link: "/dashboard/car" },
-                { name: "Add New Car" },
-              ]}
-            />
-            <h3 className="section-title">Add New Car</h3>
-            <form className="form-new-car">
-              <div className="form-group">
-                <label htmlFor="formName">Nama</label>
-                <input
-                  type="text"
-                  name="name"
-                  id="formName"
-                  className="form-control input-field"
-                  placeholder="Input Nama Mobil..."
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="formPrice">Harga</label>
-                <input
-                  type="number"
-                  name="name"
-                  id="formPrice"
-                  className="form-control input-field"
-                  placeholder="Input Harga Mobil..."
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="formPhoto">Foto</label>
-                <input
-                  type="file"
-                  name="name"
-                  id="formPrice"
-                  className="form-control input-field"
-                />
-              </div>
-              <div className="form-group">
-                <label>Start Rent</label>
-                <span className="input-field">-</span>
-              </div>
-              <div className="form-group">
-                <label>Finish Rent</label>
-                <span className="input-field">-</span>
-              </div>
-              <div className="form-group">
-                <label>Created at</label>
-                <span className="input-field">-</span>
-              </div>
-              <div className="form-group">
-                <label>Updated At</label>
-                <span className="input-field">-</span>
-              </div>
-            </form>
-            <div className="button-group">
-              <Button variant="outline-primary" onClick={handleToListCar}>
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() =>
-                  handleShowNotification("success", "Data Berhasil Disimpan")
-                }
-              >
-                Save
-              </Button>
-            </div>
-          </div>
-        </Fragment>
+        <AddNewCar onCancel={handleToListCar} onAdd={handleAddNewCar} />
       ) : null}
     </Fragment>
   );
