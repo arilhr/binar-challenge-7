@@ -15,7 +15,7 @@ export const OrderList = () => {
     axios.get(process.env.REACT_APP_API + "/admin/order").then((res) => {
       setOrderData(res.data);
     });
-  }, []);
+  }, [axios]);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
@@ -143,7 +143,7 @@ export const CarList = () => {
     axios.get(process.env.REACT_APP_API + "/admin/car").then((res) => {
       setCarData(res.data);
     });
-  }, []);
+  }, [axios]);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);

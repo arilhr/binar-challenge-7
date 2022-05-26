@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { DeleteCard } from "../../../components/DeleteCard/DeleteCard";
 import { ListCarItem } from "../../../components/ListCarItem/ListCarItem";
@@ -7,7 +7,6 @@ import { SectionNavigation } from "../../../components/SectionNavigation/Section
 import { NotificationCard } from "../../../components/NotificationCard/NotificationCard";
 import CarImage from "../../../assets/img/car-image.png";
 import { ReactComponent as PlusIcon } from "../../../assets/img/fi_plus.svg";
-import CarData from "../../../car-data.json";
 import "./CarPage.scss";
 import "./AddNewCarPage.scss";
 
@@ -16,7 +15,14 @@ export const CarPage = () => {
   const [deleteItem, setDeleteItem] = useState(false);
   const [notif, setNotif] = useState({ show: false, type: "", message: "" });
   const [carFilter, setCarFilter] = useState("all");
-  const carDatas = CarData;
+  const [carData, setCarData] = useState([]);
+
+  useEffect(() => {
+    const axios = require("axios");
+    axios.get(process.env.REACT_APP_API + "/admin/car").then((res) => {
+      setCarData(res.data);
+    });
+  }, []);
 
   const handleCarFilter = (category) => {
     setCarFilter(category);
@@ -25,17 +31,17 @@ export const CarPage = () => {
   const getCarShowed = () => {
     switch (carFilter) {
       case "all":
-        return carDatas;
+        return carData;
       case "small":
-        return carDatas.filter((value) => {
+        return carData.filter((value) => {
           return value.category === "Small";
         });
       case "medium":
-        return carDatas.filter((value) => {
+        return carData.filter((value) => {
           return value.category === "Medium";
         });
       case "large":
-        return carDatas.filter((value) => {
+        return carData.filter((value) => {
           return value.category === "Large";
         });
       default:
@@ -150,13 +156,13 @@ export const CarPage = () => {
                 return (
                   <ListCarItem
                     key={item.id}
-                    image={CarImage}
+                    image={item.image}
                     name={item.name}
                     type={item.category}
                     price={item.price}
-                    start={item.startRent}
-                    finish={item.finishRent}
-                    lastUpdate={item.updateAt}
+                    start={item.start_rent_at}
+                    finish={item.finish_rent_at}
+                    lastUpdate={item.updatedAt}
                     onDelete={handleShowDeleteAlert}
                     onEdit={handleToAddnewCar}
                   />

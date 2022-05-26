@@ -25,6 +25,14 @@ export const ListCarItem = ({
     return rupiah;
   };
 
+  function convertDate(inputFormat) {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
+  }
+
   return (
     <div className="car-item">
       <div className="car-image">
@@ -32,14 +40,18 @@ export const ListCarItem = ({
       </div>
       <div className="description">
         <p className="name">{`${name} / ${type}`}</p>
-        <p className="price">{`${convertToRupiah(price)} / hari`}</p>
+        <p className="price">{`${convertToRupiah(
+          price ? price : 0
+        )} / hari`}</p>
         <div className="duration icon-and-text">
           <KeyIcon />
-          <p className="text">{`${start} - ${finish}`}</p>
+          <p className="text">{`${convertDate(start)} - ${convertDate(
+            finish
+          )}`}</p>
         </div>
         <div className="last-update icon-and-text">
           <ClockIcon />
-          <p className="text">{lastUpdate}</p>
+          <p className="text">{convertDate(lastUpdate)}</p>
         </div>
         <div className="button-group">
           <Button variant="outline-danger" onClick={onDelete}>

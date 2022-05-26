@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { CarList, OrderList } from "../../../components/PageList/PageList";
 import { SecondarySidebar } from "../../../components/SecondarySidebar/SecondarySidebar";
 import { SectionNavigation } from "../../../components/SectionNavigation/SectionNavigation";
