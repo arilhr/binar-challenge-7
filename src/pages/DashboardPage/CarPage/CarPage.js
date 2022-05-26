@@ -6,9 +6,8 @@ import { SecondarySidebar } from "../../../components/SecondarySidebar/Secondary
 import { SectionNavigation } from "../../../components/SectionNavigation/SectionNavigation";
 import { NotificationCard } from "../../../components/NotificationCard/NotificationCard";
 import { ReactComponent as PlusIcon } from "../../../assets/img/fi_plus.svg";
-import "./CarPage.scss";
-import "./AddNewCarPage.scss";
 import { AddNewCar } from "../../../components/AddNewCar/AddNewCar";
+import "./CarPage.scss";
 
 export const CarPage = () => {
   const [pageState, setPageState] = useState("list-car");
@@ -98,6 +97,7 @@ export const CarPage = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        setCarData([...carData, response.data]);
         handleToListCar();
         handleShowNotification("success", "Data Berhasil Ditambahkan");
       })
