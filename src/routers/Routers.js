@@ -12,10 +12,23 @@ import { LayoutDefault } from "../pages/LayoutDefault/LayoutDefault";
 export const Routers = () => {
   return (
     <Routes>
-      <Route exact path="/" element={<Homepage />} />
-      <Route path="/search" element={<SearchCarPage />} />
-      <Route path="/car" element={<CarDetailPage />}>
-        <Route path="/car/:id" element={<CarDetailPage />} />
+      <Route
+        exact
+        path="/"
+        element={<LayoutDefault content={<Homepage />} />}
+      />
+      <Route
+        path="/search"
+        element={<LayoutDefault content={<SearchCarPage />} />}
+      />
+      <Route
+        path="/car"
+        element={<LayoutDefault content={<CarDetailPage />} />}
+      >
+        <Route
+          path="/car/:id"
+          element={<LayoutDefault content={<CarDetailPage />} />}
+        />
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

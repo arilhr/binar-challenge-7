@@ -8,6 +8,7 @@ import { PaymentMethod } from "../../components/PaymentMethod/PaymentMethod";
 import { Link, useNavigate } from "react-router-dom";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import InvoicePDF from "../../assets/doc/invoice.pdf";
+import "@react-pdf-viewer/core/lib/styles/index.css";
 
 export const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState(0);
