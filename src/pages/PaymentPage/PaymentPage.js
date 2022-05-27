@@ -11,7 +11,7 @@ export const PaymentPage = () => {
     <div className="payment-page">
       <div className="banner"></div>
       <div className="content-container d-flex flex-column align-items-center">
-        <Payment />
+        <TicketPage />
       </div>
     </div>
   );
@@ -185,7 +185,7 @@ const MethodPage = () => {
   );
 };
 
-const Payment = () => {
+const PayingPage = () => {
   const [confirm, setConfirm] = useState(false);
   return (
     <>
@@ -422,6 +422,79 @@ const Payment = () => {
               </>
             )}
           </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const TicketPage = () => {
+  return (
+    <>
+      <div className="top-bar">
+        <div className="back-button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-arrow-left-short"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"
+            />
+          </svg>
+        </div>
+        <div className="description">
+          <span className="bold-text">Ticket</span>
+          <span className="default-text">Order ID: XXXXX</span>
+        </div>
+        <div className="steps">
+          <div className="step">
+            <div className="circle done">
+              <span>1</span>
+            </div>
+            <span className="text">Pilih Metode</span>
+          </div>
+          <div className="line"></div>
+          <div className="step">
+            <div className="circle done">
+              <span>2</span>
+            </div>
+            <span className="text">Bayar</span>
+          </div>
+          <div className="line"></div>
+          <div className="step">
+            <div className="circle done">
+              <span>3</span>
+            </div>
+            <span className="text">Tiket</span>
+          </div>
+        </div>
+      </div>
+      <div className="ticket-content">
+        <div className="check-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#fff"
+            className="bi bi-check-lg"
+            viewBox="0 0 16 16"
+          >
+            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+          </svg>
+        </div>
+        <span className="bold-text">Pembayaran Berhasil</span>
+        <span className="light-text">
+          Tunjukkan invoice ini ke petugas BCR di titik temu.
+        </span>
+        {/* Invoice */}
+        <div className="invoice box-container">
+          <span className="bold-text">Invoice</span>
+          <div className="invoice-viewer"></div>
         </div>
       </div>
     </>
