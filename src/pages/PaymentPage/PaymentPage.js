@@ -5,7 +5,9 @@ import { ReactComponent as SettingIcon } from "../../assets/img/fi_settings.svg"
 import { ReactComponent as UsersIcon } from "../../assets/img/fi_users.svg";
 import { Accordion, Button, Tab, Tabs } from "react-bootstrap";
 import { PaymentMethod } from "../../components/PaymentMethod/PaymentMethod";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import InvoicePDF from "../../assets/doc/invoice.pdf";
 
 export const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -549,8 +551,29 @@ const TicketPage = () => {
         </span>
         {/* Invoice */}
         <div className="invoice box-container">
-          <span className="bold-text">Invoice</span>
-          <div className="invoice-viewer"></div>
+          <div className="top-content">
+            <span className="bold-text">Invoice</span>
+            <Link
+              to={InvoicePDF}
+              className="download-button"
+              target="_blank"
+              download
+            >
+              Unduh
+            </Link>
+          </div>
+          <div className="invoice-viewer">
+            <div
+              style={{
+                border: "1px solid rgba(0, 0, 0, 0.3)",
+                height: "100%",
+              }}
+            >
+              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.min.js">
+                <Viewer fileUrl={InvoicePDF} />
+              </Worker>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Accordion, Button } from "react-bootstrap";
+import ModalImage from "react-modal-image";
 import { useParams } from "react-router-dom";
 import CarSearchForm from "../../components/CarSearchForm/CarSearchForm";
 import { ReactComponent as CalendarIcon } from "../../assets/img/fi_calendar.svg";
@@ -102,16 +103,20 @@ export const CarDetailPage = (props) => {
 
           <div className="specs-section">
             <div className="car-image">
-              <img src={displayCar?.image} alt="Car" />
+              <ModalImage
+                small={displayCar?.image}
+                large={displayCar?.image}
+                alt={displayCar?.name}
+              />
+              ;
             </div>
             <div className="description">
               <div className="car-description">
-                <h3>
-                  {displayCar?.name}/{displayCar?.category}
-                </h3>
+                <h3>{displayCar?.name}</h3>
                 <div className="specs-desc">
                   <span className="specs-item">
-                    <UsersIcon />4 orang
+                    <UsersIcon />
+                    {displayCar?.category}
                   </span>
                   <span className="specs-item">
                     <SettingIcon />
