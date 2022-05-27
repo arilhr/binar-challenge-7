@@ -5,23 +5,60 @@ import { ReactComponent as SettingIcon } from "../../assets/img/fi_settings.svg"
 import { ReactComponent as UsersIcon } from "../../assets/img/fi_users.svg";
 import { Accordion, Button, Tab, Tabs } from "react-bootstrap";
 import { PaymentMethod } from "../../components/PaymentMethod/PaymentMethod";
+import { useNavigate } from "react-router-dom";
 
 export const PaymentPage = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const navigate = useNavigate();
+
+  const handleConfirmMethod = (method) => {
+    console.log(`Metode pembayaran: ${method}`);
+    setActiveTab(1);
+  };
+
+  const handleConfirmPayment = () => {
+    console.log(`Pembayaran berhasil`);
+    setActiveTab(2);
+  };
+
   return (
     <div className="payment-page">
       <div className="banner"></div>
       <div className="content-container d-flex flex-column align-items-center">
-        <TicketPage />
+        {activeTab === 0 && (
+          <MethodPage
+            handleBack={() => navigate("/")}
+            handleConfirm={handleConfirmMethod}
+          />
+        )}
+        {activeTab === 1 && (
+          <PayingPage
+            handleBack={() => setActiveTab(0)}
+            handleConfirmPayment={handleConfirmPayment}
+          />
+        )}
+        {activeTab === 2 && <TicketPage />}
       </div>
     </div>
   );
 };
 
-const MethodPage = () => {
+const MethodPage = ({ handleBack, handleConfirm }) => {
+  const [method, setMethod] = useState("");
+
+  const changeMethod = (newMethod) => {
+    if (method === newMethod) {
+      setMethod("");
+      return;
+    }
+
+    setMethod(newMethod);
+  };
+
   return (
     <>
       <div className="top-bar">
-        <div className="back-button">
+        <div className="back-button" onClick={handleBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -91,11 +128,23 @@ const MethodPage = () => {
             atau Mobile Banking
           </p>
           <div className="method-list">
-            <PaymentMethod name="BCA Transfer" selected />
+            <PaymentMethod
+              name="BCA Transfer"
+              selected={method === "BCA"}
+              onClick={() => changeMethod("BCA")}
+            />
             <div className="line"></div>
-            <PaymentMethod name="BNI Transfer" />
+            <PaymentMethod
+              name="BNI Transfer"
+              selected={method === "BNI"}
+              onClick={() => changeMethod("BNI")}
+            />
             <div className="line"></div>
-            <PaymentMethod name="Mandiri Transfer" />
+            <PaymentMethod
+              name="Mandiri Transfer"
+              selected={method === "Mandiri"}
+              onClick={() => changeMethod("Mandiri")}
+            />
             <div className="line"></div>
           </div>
         </div>
@@ -177,7 +226,13 @@ const MethodPage = () => {
               <span className="bold-text">Total</span>
               <span className="bold-text">Rp 430.000</span>
             </div>
-            <Button variant="success">Bayar</Button>
+            <Button
+              variant="success"
+              disabled={method === ""}
+              onClick={() => handleConfirm(method)}
+            >
+              Bayar
+            </Button>
           </div>
         </div>
       </div>
@@ -185,12 +240,13 @@ const MethodPage = () => {
   );
 };
 
-const PayingPage = () => {
+const PayingPage = ({ handleBack, handleConfirmPayment }) => {
   const [confirm, setConfirm] = useState(false);
+
   return (
     <>
       <div className="top-bar">
-        <div className="back-button">
+        <div className="back-button" onClick={handleBack}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -415,7 +471,7 @@ const PayingPage = () => {
                 <Button
                   variant="success"
                   className="w-100 p-2 mt-3"
-                  onClick={() => setConfirm(false)}
+                  onClick={() => handleConfirmPayment()}
                 >
                   Upload
                 </Button>

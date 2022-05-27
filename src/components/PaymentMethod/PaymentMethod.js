@@ -1,9 +1,12 @@
 import React from "react";
 import "./PaymentMethod.scss";
 
-export const PaymentMethod = ({ icon, name, selected }) => {
+export const PaymentMethod = ({ icon, name, selected, onClick }) => {
   return (
-    <div className={`method-item ${selected ? "selected" : ""}`}>
+    <div
+      className={`method-item ${selected ? "selected" : ""}`}
+      onClick={onClick}
+    >
       <div className="method-icon">
         <span>ICON</span>
       </div>
