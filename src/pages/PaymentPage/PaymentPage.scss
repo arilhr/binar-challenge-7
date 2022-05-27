@@ -14,11 +14,22 @@
     margin-top: 136px;
     width: 1047px;
 
+    /* Method Page */
+
     .top-bar {
       width: 100%;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 16px;
+
+      .description {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .steps {
+        margin-left: auto;
+      }
     }
 
     .content-2 {
@@ -168,16 +179,119 @@
         }
       }
     }
+
+    /* Payment Page */
+    .container-2 {
+      width: 100%;
+      margin-top: 120px;
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+
+      .left-side {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .right-side {
+        flex: 2;
+      }
+    }
+
+    .time-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .desc {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .time {
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 26px;
+      }
+
+      .pink-box {
+        padding: 6px;
+        background-color: #fa2c5a;
+        border-radius: 3px;
+        color: #fff;
+      }
+    }
+
+    .transfer-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .method {
+        display: flex;
+        gap: 16px;
+        .method-desc {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+      }
+    }
+
+    .instruction-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      .list-group {
+        h4 {
+          font-weight: 300;
+          font-size: 14px;
+          line-height: 20px;
+        }
+
+        ol {
+          font-weight: 300;
+          font-size: 14px;
+          color: #8a8a8a;
+          line-height: 175%;
+        }
+      }
+
+      .nav-link {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 20px;
+        color: #000;
+        border-width: 0;
+
+        &.active {
+          border-width: 0 0 1px 0;
+          border-color: #5cb85f;
+        }
+      }
+    }
+
+    .confirm-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      .header {
+        display: flex;
+        justify-content: space-between;
+      }
+      .proof {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
   }
 
   .back-button {
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 20px;
-    display: flex;
-    gap: 21px;
-    align-items: center;
-
+    width: 20px;
+    height: 20px;
     .bi-arrow-left-short {
       width: 20px;
       height: 20px;
@@ -264,6 +378,54 @@
   line-height: 20px;
 }
 
+.light-text {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 18px;
+  color: #3c3c3c;
+}
+
 .green {
   color: #5cb85f;
+}
+
+.method-icon {
+  width: 61px;
+  height: 30px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.copy-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .field {
+    width: 100%;
+    border: 1px solid #3c3c3c;
+    border-radius: 2px;
+    padding: 9px 12px;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+
+    > * {
+      font-size: 100%;
+    }
+  }
+}
+
+.pink-box {
+  padding: 6px;
+  background-color: #fa2c5a;
+  border-radius: 3px;
+  color: #fff;
 }
