@@ -6,6 +6,7 @@ import { DashboardPage } from "../pages/DashboardPage/DashboardPage";
 import { Homepage } from "../pages/Homepage/Homepage";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
+import { PaymentPage } from "../pages/PaymentPage/PaymentPage";
 
 export const Routers = () => {
   return (
@@ -20,6 +21,7 @@ export const Routers = () => {
       <Route path="/dashboard" element={<DashboardPage />}>
         <Route path=":first" element={<DashboardPage />} />
       </Route>
+      <Route path="/order" element={<PaymentPage />} />
     </Routes>
   );
 };
