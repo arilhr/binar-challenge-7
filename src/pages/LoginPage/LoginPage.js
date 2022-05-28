@@ -48,13 +48,10 @@ const LoginPage = (props) => {
           props.setEmailData(res.data.email);
 
           // save token to local storage
-          localStorage.setItem(
-            "accessToken",
-            JSON.stringify(res.data.access_token)
-          );
+          localStorage.setItem("accessToken", res.data.access_token);
 
           // temp: save account data to local storage
-          localStorage.setItem("accountData", JSON.stringify(res.user));
+          localStorage.setItem("accountData", JSON.stringify(res.data));
 
           // notification
           showAlert("success", "Login Berhasil!");

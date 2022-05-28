@@ -1,7 +1,8 @@
-import { EMAIL_DATA } from "../actions/types";
+import { EMAIL_DATA, SET_ORDER } from "../actions/types";
 
 const initialState = {
   email: "",
+  order: null,
 };
 
 const AccountDataReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const AccountDataReducer = (state = initialState, action) => {
       return {
         ...state,
         email: action.payload,
+      };
+    case SET_ORDER:
+      return {
+        ...state,
+        order: action.payload,
       };
     default:
       return state;

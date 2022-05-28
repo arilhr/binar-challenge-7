@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Accordion, Button } from "react-bootstrap";
 import ModalImage from "react-modal-image";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import CarSearchForm from "../../components/CarSearchForm/CarSearchForm";
 import { ReactComponent as CalendarIcon } from "../../assets/img/fi_calendar.svg";
 import { ReactComponent as SettingIcon } from "../../assets/img/fi_settings.svg";
 import { ReactComponent as UsersIcon } from "../../assets/img/fi_users.svg";
 import "./CarPage.scss";
+import { SetOrder } from "../../redux/actions/accountDataActions";
 
 export const CarDetailPage = (props) => {
   const params = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [displayCar, setDisplayCar] = useState();
 
   useEffect(() => {
@@ -25,6 +28,16 @@ export const CarDetailPage = (props) => {
     })
       .format(price)
       .split(",")[0];
+  };
+
+  const orderCar = (id) => {
+    if (localStorage.getItem("accessToken") === null) {
+      alert("Silahkan login terlebih dahulu");
+      navigate("/login");
+      return;
+    }
+    dispatch(SetOrder(id));
+    navigate("/order");
   };
 
   return (
@@ -98,7 +111,9 @@ export const CarDetailPage = (props) => {
                 </Accordion.Item>
               </Accordion>
             </div>
-            <Button variant="success">Lanjutkan Pembayaran</Button>
+            <Button variant="success" onClick={() => orderCar(displayCar.id)}>
+              Lanjutkan Pembayaran
+            </Button>
           </div>
 
           <div className="specs-section">
@@ -133,7 +148,9 @@ export const CarDetailPage = (props) => {
                 <span>Total</span>
                 <h3>{convertPriceToRupiah(displayCar?.price)}</h3>
               </div>
-              <Button variant="success">Lanjutkan Pembayaran</Button>
+              <Button variant="success" onClick={() => orderCar(displayCar.id)}>
+                Lanjutkan Pembayaran
+              </Button>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PaymentPage.scss";
 import { ReactComponent as CalendarIcon } from "../../assets/img/fi_calendar.svg";
 import { ReactComponent as SettingIcon } from "../../assets/img/fi_settings.svg";
@@ -9,44 +9,89 @@ import { Link, useNavigate } from "react-router-dom";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import InvoicePDF from "../../assets/doc/invoice.pdf";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import store from "../../redux/store/store";
+import axios from "axios";
 
 export const PaymentPage = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [orderedCar, setOrderedCar] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken") === null) {
+      navigate("/");
+      return;
+    }
+
+    const carId = store.getState().accountDataReducers.order.order;
+    if (carId) {
+      const car = store
+        .getState()
+        .getDataReducers.carData.find((car) => car.id === carId);
+      setOrderedCar(car);
+    }
+  }, []);
 
   const handleConfirmMethod = (method) => {
     console.log(`Metode pembayaran: ${method}`);
     setActiveTab(1);
   };
 
-  const handleConfirmPayment = () => {
-    console.log(`Pembayaran berhasil`);
-    setActiveTab(2);
+  const handleConfirmPayment = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const formData = new FormData();
+    formData.append("start_rent_at", "2022-10-05");
+    formData.append("finish_rent_at", "2022-10-12");
+    formData.append("car_id", orderedCar.id);
+
+    console.log(accessToken);
+    const header = {
+      access_token: accessToken,
+    };
+
+    var config = {
+      method: "post",
+      url: process.env.REACT_APP_API + "/customer/order",
+      headers: header,
+      data: formData,
+    };
+
+    axios(config)
+      .then((res) => {
+        console.log(`Pembayaran berhasil`);
+        console.log(`${JSON.stringify(res.data)}`);
+        setActiveTab(2);
+      })
+      .catch((err) => {
+        console.log(`Pembayaran gagal + ${err}`);
+      });
   };
 
   return (
     <div className="payment-page">
       <div className="banner"></div>
       <div className="content-container d-flex flex-column align-items-center">
-        {activeTab === 0 && (
+        {orderedCar !== null && activeTab === 0 && (
           <MethodPage
             handleBack={() => navigate("/")}
             handleConfirm={handleConfirmMethod}
+            carData={orderedCar}
           />
         )}
-        {activeTab === 1 && (
+        {orderedCar !== null && activeTab === 1 && (
           <PayingPage
             handleBack={() => setActiveTab(0)}
             handleConfirmPayment={handleConfirmPayment}
+            carData={orderedCar}
           />
         )}
-        {activeTab === 2 && <TicketPage />}
+        {orderedCar !== null && activeTab === 2 && <TicketPage />}
       </div>
     </div>
   );
 };
 
-const MethodPage = ({ handleBack, handleConfirm }) => {
+const MethodPage = ({ handleBack, handleConfirm, carData }) => {
   const [method, setMethod] = useState("");
 
   const changeMethod = (newMethod) => {
@@ -111,15 +156,15 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
           </div>
           <div className="detail-group">
             <h5>Tanggal</h5>
-            <span>Dengan Sopir</span>
+            <span>-</span>
           </div>
           <div className="detail-group">
             <h5>Waktu Jemput/Antar</h5>
-            <span>Dengan Sopir</span>
+            <span>-</span>
           </div>
           <div className="detail-group">
             <h5>Jumlah Penumpang (opsional)</h5>
-            <span>Dengan Sopir</span>
+            <span>-</span>
           </div>
         </div>
       </div>
@@ -152,10 +197,11 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
           </div>
         </div>
         <div className="payment-detail box-container">
-          <h3>Nama/Tipe Mobil</h3>
+          <h3>{carData?.name}</h3>
           <div className="specs-desc">
             <span className="specs-item">
-              <UsersIcon />4 orang
+              <UsersIcon />
+              {carData?.category}
             </span>
             <span className="specs-item">
               <SettingIcon />
@@ -170,7 +216,9 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>
                 <span className="default-text">Total</span>
-                <span className="bold-text">Rp 430.000</span>
+                <span className="bold-text">
+                  {convertPriceToRupiah(carData?.price)}
+                </span>
               </Accordion.Header>
               <Accordion.Body>
                 <div className="price-group">
@@ -181,7 +229,9 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
                         <span className="default-text">
                           1 Mobil dengan sopir
                         </span>
-                        <span className="default-text">Rp 430.000</span>
+                        <span className="default-text">
+                          {convertPriceToRupiah(carData.price)}
+                        </span>
                       </div>
                     </li>
                   </ul>
@@ -227,7 +277,9 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
             <hr />
             <div className="total-price">
               <span className="bold-text">Total</span>
-              <span className="bold-text">Rp 430.000</span>
+              <span className="bold-text">
+                {convertPriceToRupiah(carData ? carData.price : 0)}
+              </span>
             </div>
             <Button
               variant="success"
@@ -243,7 +295,7 @@ const MethodPage = ({ handleBack, handleConfirm }) => {
   );
 };
 
-const PayingPage = ({ handleBack, handleConfirmPayment }) => {
+const PayingPage = ({ handleBack, handleConfirmPayment, carData }) => {
   const [confirm, setConfirm] = useState(false);
 
   return (
@@ -324,7 +376,9 @@ const PayingPage = ({ handleBack, handleConfirmPayment }) => {
             <div className="copy-field">
               <span className="light-text">Total Bayar</span>
               <div className="field">
-                <span className="bold-text">Rp 430.000</span>
+                <span className="bold-text">
+                  {convertPriceToRupiah(carData?.price)}
+                </span>
               </div>
             </div>
           </div>
@@ -579,4 +633,13 @@ const TicketPage = () => {
       </div>
     </>
   );
+};
+
+const convertPriceToRupiah = (price) => {
+  return Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  })
+    .format(price)
+    .split(",")[0];
 };
