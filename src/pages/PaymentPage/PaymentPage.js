@@ -542,10 +542,11 @@ const PayingPage = ({ handleBack, handleConfirmPayment, carData }) => {
 };
 
 const TicketPage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="top-bar">
-        <div className="back-button">
+        <div className="back-button" onClick={() => navigate("/")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

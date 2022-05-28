@@ -36,11 +36,11 @@ const SearchCarPage = (props) => {
     } else {
       carByPenumpang = carByTipe.filter((car) => {
         if (seat === "1") {
-          return car.category.toLowerCase() === "small";
+          return car.category?.toLowerCase() === "small";
         } else if (seat > 1 && seat < 4) {
-          return car.category.toLowerCase() === "medium";
+          return car.category?.toLowerCase() === "medium";
         } else {
-          return car.category.toLowerCase() === "large";
+          return car.category?.toLowerCase() === "large";
         }
       });
     }

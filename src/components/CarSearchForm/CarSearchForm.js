@@ -14,10 +14,10 @@ const CarSearchForm = (props) => {
   const jumlahPenumpangInput = useRef(null);
 
   useEffect(() => {
-    if (props.driverType != null) tipeInput.current.value = props.driverType;
-    if (props.date != null) tanggalPesanInput.current.value = props.date;
-    if (props.time != null) waktuAmbilInput.current.value = props.time;
-    if (props.seat != null) jumlahPenumpangInput.current.value = props.seat;
+    if (props.driverType !== "") tipeInput.current.value = props.driverType;
+    if (props.date !== "") tanggalPesanInput.current.value = props.date;
+    if (props.time !== "") waktuAmbilInput.current.value = props.time;
+    if (props.seat !== "") jumlahPenumpangInput.current.value = props.seat;
   }, []);
 
   const handleSubmitSearch = (e) => {
