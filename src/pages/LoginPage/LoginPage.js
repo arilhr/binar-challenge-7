@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase";
+import { connect } from "react-redux";
+import { SetEmail } from "../../redux/actions/accountDataActions";
 
-export const LoginPage = () => {
+const LoginPage = (props) => {
   const [info, setInfo] = useState("");
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
@@ -42,8 +44,17 @@ export const LoginPage = () => {
       })
       .then((res) => {
         if (res.status === 201) {
+          // save account data to redux
+          props.setEmailData(res.data.email);
+
           // save token to local storage
-          localStorage.setItem("accountData", JSON.stringify(res.data));
+          localStorage.setItem(
+            "accessToken",
+            JSON.stringify(res.data.access_token)
+          );
+
+          // temp: save account data to local storage
+          localStorage.setItem("accountData", JSON.stringify(res.user));
 
           // notification
           showAlert("success", "Login Berhasil!");
@@ -129,3 +140,19 @@ export const LoginPage = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    email: state.email,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setEmailData: (email) => {
+      dispatch(SetEmail(email));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

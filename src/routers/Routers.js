@@ -4,7 +4,7 @@ import SearchCarPage from "../pages/CarPage/SearchCarPage";
 import CarDetailPage from "../pages/CarPage/CarDetailPage";
 import { DashboardPage } from "../pages/DashboardPage/DashboardPage";
 import { Homepage } from "../pages/Homepage/Homepage";
-import { LoginPage } from "../pages/LoginPage/LoginPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { PaymentPage } from "../pages/PaymentPage/PaymentPage";
 import { LayoutDefault } from "../pages/LayoutDefault/LayoutDefault";
