@@ -12,6 +12,7 @@ export const DashboardNavbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("accountData");
+    localStorage.removeItem("accessToken");
 
     navigate("/login");
   };

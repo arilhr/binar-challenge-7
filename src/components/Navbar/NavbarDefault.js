@@ -14,9 +14,9 @@ export const NavbarDefault = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("accountData");
+    localStorage.removeItem("accessToken");
 
-    setLoggedIn(false);
-    setAccountData(null);
+    navigate("/login");
   };
 
   return (
