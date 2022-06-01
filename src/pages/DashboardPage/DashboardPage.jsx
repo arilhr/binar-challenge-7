@@ -13,15 +13,15 @@ export const DashboardPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if (localStorage.getItem("accountData") === null) {
-    //   navigate("/login");
-    //   return;
-    // }
-    // const accountData = JSON.parse(localStorage.getItem("accountData"));
-    // if (accountData.role !== "admin") {
-    //   navigate("/");
-    //   return;
-    // }
+    if (localStorage.getItem("accountData") === null) {
+      navigate("/login");
+      return;
+    }
+    const accountData = JSON.parse(localStorage.getItem("accountData"));
+    if (accountData.role !== "admin") {
+      navigate("/");
+      return;
+    }
   }, []);
 
   return (

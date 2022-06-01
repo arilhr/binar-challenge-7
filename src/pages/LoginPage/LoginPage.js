@@ -63,7 +63,7 @@ const LoginPage = (props) => {
             }, 2000);
           }
 
-          if (res.data.role === "user") {
+          if (res.data.role === "customer") {
             setTimeout(() => {
               navigate("/");
             }, 2000);
@@ -83,16 +83,62 @@ const LoginPage = (props) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((res) => {
-        localStorage.setItem("accountData", JSON.stringify(res.user));
-        showAlert("success", "Login Berhasil!");
-
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        loginAccountByGoogle(res.user);
       })
       .catch((err) => {
         if (err.code === "auth/popup-closed-by-user") return;
         showAlert("danger", "Login Gagal!");
+      });
+  };
+
+  const loginAccountByGoogle = (data) => {
+    axios
+      .post(process.env.REACT_APP_API + "/admin/auth/login", {
+        email: data.email,
+        password: data.uid,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          // save account data to redux
+          props.setEmailData(res.data.email);
+
+          // save token to local storage
+          localStorage.setItem("accessToken", res.data.access_token);
+
+          // temp: save account data to local storage
+          localStorage.setItem("accountData", JSON.stringify(res.data));
+
+          // notification
+          showAlert("success", "Login Berhasil!");
+
+          // redirect to dashboard
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400 || 404) {
+          axios
+            .post(process.env.REACT_APP_API + "/admin/auth/register", {
+              email: data.email,
+              password: data.uid,
+              role: "customer",
+            })
+            .then((res) => {
+              if (res.status === 201) {
+                showAlert("success", "Login Berhasil!");
+
+                // redirect to login page
+                setTimeout(() => {
+                  navigate("/login");
+                }, 2000);
+              }
+            })
+            .catch((err) => {
+              showAlert("danger", "Login Gagal!");
+            });
+        }
       });
   };
 

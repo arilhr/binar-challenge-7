@@ -78,7 +78,7 @@ export const CarPage = () => {
       });
   };
 
-  const handleAddNewCar = (name, category, price, status, image) => {
+  const handleAddNewCar = async (name, category, price, status, image) => {
     const axios = require("axios");
     const formData = new FormData();
 
