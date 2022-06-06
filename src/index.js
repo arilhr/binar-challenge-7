@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./index.css";
 import { Layout } from "./pages/Layout";
 import "bootstrap/dist/css/bootstrap.min.css";
