@@ -1,10 +1,12 @@
 .hero-section {
-  padding: 0 100px;
   background: #f1f3ff;
-  display: flex;
-  height: 500px;
-  align-items: center;
-  overflow-x: hidden;
+
+  .container {
+    display: flex;
+    height: 500px;
+    align-items: center;
+    overflow-x: hidden;
+  }
 
   .section-1 {
     flex: 1;
@@ -35,7 +37,7 @@
     img {
       position: absolute;
       bottom: 0;
-      left: 0;
+      right: 0;
     }
   }
 }
